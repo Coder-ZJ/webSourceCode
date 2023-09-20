@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .row {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .flow-item {
+      width: 200px;
+      background-color: #FFF3E0;
+      line-height: 20px;
+      padding: 5px 0 5px 10px;
+      position: relative;
+      text-align: center;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    .row-product .flow-item {
+      background-color: #E8EBEF;
+    }
+
+    .flow-item::before {
+      content: '';
+      display: block;
+      position: absolute;
+      border-style: solid;
+      border-width: 15px 0 15px 10px;
+      border-color: transparent transparent transparent #fff;
+      left: 0;
+      top: 0;
+    }
+
+    .flow-item::after {
+      content: '';
+      display: block;
+      border-style: solid;
+      border-width: 15px 0 15px 10px;
+      border-color: transparent transparent transparent #E8EBEF;
+      position: absolute;
+      right: -10px;
+      left: auto;
+      top: 0;
+      z-index: 2;
+    }
+
+    .row-admin .flow-item::after {
+      border-left-color: #FFF3E0;
+    }
+
+    .row-product .flow-item::after {
+      border-left-color: #E8EBEF;
+    }
+
+    .flow-item:hover span {
+      color: #fff;
+    }
+
+    .flow-item:hover {
+      background-color: #EF6C00;
+    }
+
+    .row-product .flow-item:hover {
+      background-color: #1565C0;
+    }
+
+    .flow-item:hover::after {
+      border-left-color: #EF6C00;
+    }
+
+    .row-product .flow-item:hover::after {
+      border-left-color: #1565C0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="row row-admin">
+    <div class="flow-item flow-item-1">
+      <span>管理员</span>
+    </div>
+    <div class="flow-item flow-item-2">
+      <span>维护公司</span>
+    </div>
+    <div class="flow-item flow-item-3">
+      <span>添加用户</span>
+    </div>
+    <div class="flow-item flow-item-4">
+      <span>维护权限</span>
+    </div>
+  </div>
+  <div class="row row-product">
+    <div class="flow-item flow-item-1">
+      <span>产品经理</span>
+    </div>
+    <div class="flow-item flow-item-2">
+      <span>创建产品</span>
+    </div>
+    <div class="flow-item flow-item-3">
+      <span>维护模块</span>
+    </div>
+    <div class="flow-item flow-item-4">
+      <span>维护计划</span>
+    </div>
+    <div class="flow-item flow-item-4">
+      <span>维护需求</span>
+    </div>
+    <div class="flow-item flow-item-4">
+      <span>创建发布</span>
+    </div>
+  </div>
+</body>
+
+</html>

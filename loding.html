@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    @keyframes loading-inner {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      50% {
+        transform: rotate(180deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .loading-wrapper {
+      height: 200px;
+      width: 200px;
+      display: inline-block;
+      overflow: hidden;
+    }
+
+    .loading-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform: translateZ(0) scale(1);
+      backface-visibility: hidden;
+      transform-origin: 0 0;
+    }
+
+    .loading-inner div {
+      position: absolute;
+      animation: loading-inner 1s linear infinite;
+      width: 160px;
+      height: 160px;
+      top: 20px;
+      left: 20px;
+      border-radius: 50%;
+      box-shadow: 0 4px 0 0 #e15b64;
+      transform-origin: 80px 82px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loading-wrapper">
+    <div class="loading-inner">
+      <div></div>
+    </div>
+  </div>
+</body>
+<script>
+
+
+</script>
+
+</html>
