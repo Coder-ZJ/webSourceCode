@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .swiper-container {
+      width: 100%;
+      /* background-color: pink; */
+      position: relative;
+    }
+
+    .swiper {
+      width: 1200px;
+      height: 300px;
+      margin: 0 auto;
+      list-style: none;
+      position: relative;
+    }
+
+    .swiper-item {
+      overflow: hidden;
+      position: absolute;
+      border-radius: 8px;
+      transition: all .3s;
+      z-index: -1;
+      left: -5%;
+      top: 10%;
+      height: 80%;
+      width: 50%;
+      cursor: pointer;
+    }
+
+
+    .swiper-item a {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-item img {
+      display: block;
+      height: 100%;
+      width: 100%;
+    }
+
+    .swiper-item-pre,
+    .swiper-item-next {
+      z-index: 0;
+      box-shadow: 0 0 8px rgba(0, 0, 0, .3);
+    }
+
+    .swiper-item-next {
+      left: 55%;
+      top: 10%;
+      height: 80%;
+      width: 50%;
+    }
+
+    .swiper-item-pre {
+      left: -5%;
+      top: 10%;
+      height: 80%;
+      width: 50%;
+    }
+
+    .swiper-item-center {
+      z-index: 1;
+      box-shadow: 0 0 8px rgba(0, 0, 0, .3);
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+
+    .btn-left,
+    .btn-right {
+      position: absolute;
+      width: 50px;
+      height: 100px;
+      top: 50%;
+      margin-top: -50px;
+      cursor: pointer;
+      opacity: 0;
+      transition: all .3s;
+    }
+
+    .btn-left {
+      left: 0;
+      background-image: url('./assets/migu/btn-left.png');
+    }
+
+    .btn-left:hover {
+      background-image: url('./assets/migu/btn-left-hover.png');
+    }
+
+    .btn-right {
+      right: 0;
+      background-image: url('./assets/migu/btn-right.png');
+    }
+
+    .btn-right:hover {
+      background-image: url('./assets/migu/btn-right-hover.png');
+    }
+
+    .dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 40px;
+    }
+
+    .swiper-dot {
+      display: inline-block;
+      width: 14px;
+      height: 4px;
+      border-radius: 2px;
+      background-color: #d5d5d5;
+      margin: 0 4px;
+      cursor: pointer;
+    }
+
+    .swiper-dot-active {
+      background-color: #e91e63;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="swiper-container">
+    <ul class="swiper" id="swiper">
+      <li class="swiper-item swiper-item-center">
+        <a>
+          <img src="./assets/migu/bnner1.jpeg" />
+        </a>
+      </li>
+      <li class="swiper-item swiper-item-next">
+        <a>
+          <img src="./assets/migu/bnner2.jpeg" />
+        </a>
+      </li>
+      <li class="swiper-item">
+        <a>
+          <img src="./assets/migu/bnner3.jpeg" />
+        </a>
+      </li>
+      <li class="swiper-item">
+        <a>
+          <img src="./assets/migu/bnner4.jpeg" />
+        </a>
+      </li>
+      <li class="swiper-item">
+        <a>
+          <img src="./assets/migu/bnner5.jpeg" />
+        </a>
+      </li>
+      <li class="swiper-item swiper-item-pre">
+        <a>
+          <img src="./assets/migu/bnner6.jpeg" />
+        </a>
+      </li>
+    </ul>
+    <div class="btn-left"></div>
+    <div class="btn-right"></div>
+    <div class="dots" id="dots">
+      <span class="swiper-dot swiper-dot-active"></span>
+      <span class="swiper-dot"></span>
+      <span class="swiper-dot"></span>
+      <span class="swiper-dot"></span>
+      <span class="swiper-dot"></span>
+      <span class="swiper-dot"></span>
+    </div>
+  </div>
+  <script>
+    const swiperContainer = document.getElementsByClassName('swiper-container');
+    const swiper = document.getElementById('swiper');
+    const btnLeft = document.querySelector('.btn-left');
+    const btnRight = document.querySelector('.btn-right');
+    const dots = document.getElementById('dots');
+
+    btnLeft.addEventListener('click', preHandle);
+    btnRight.addEventListener('click', nextHandle);
+    swiperContainer[0].addEventListener('mouseover', mouseoverHandle);
+    swiperContainer[0].addEventListener('mouseleave', mouseoutHandle);
+    Array.from(dots.children).forEach((el, index) => {
+      el.dataIndex = index;
+      el.addEventListener('click', dotClickHandle)
+    })
+
+    let timer = null;
+    // 开启计时器
+    function startTimer() {
+      if (timer) {
+        timer = null;
+      }
+      timer = setInterval(() => {
+        nextHandle()
+      }, 5000);
+    }
+    // 停止计时器
+    function stopTimer() {
+      clearInterval(timer);
+    }
+    startTimer();
+    // 小圆点点击事件
+    function dotClickHandle(e) {
+      currentIndex = e.target.dataIndex;
+      imgChange()
+    }
+    // 鼠标移入
+    function mouseoverHandle() {
+      btnLeft.style.opacity = 1
+      btnRight.style.opacity = 1
+      stopTimer()
+    }
+    // 鼠标移出
+    function mouseoutHandle() {
+      btnLeft.style.opacity = 0
+      btnRight.style.opacity = 0
+      startTimer();
+    }
+
+    let currentIndex = 0;
+    // 下一张
+    function nextHandle() {
+      currentIndex = (currentIndex + 1) % swiper.children.length;
+      imgChange()
+    }
+    // 上一张
+    function preHandle() {
+      currentIndex = (currentIndex - 1 + swiper.children.length) % swiper.children.length;
+      imgChange()
+    }
+    // 图片切换
+    function imgChange() {
+      Array.from(swiper.children).forEach((el, index) => {
+        el.className = 'swiper-item'
+      })
+      const left = (currentIndex - 1 + swiper.children.length) % swiper.children.length;
+      const right = (currentIndex + 1) % swiper.children.length;
+      swiper.children[left].className = 'swiper-item swiper-item-pre';
+      swiper.children[currentIndex].className = 'swiper-item swiper-item-center';
+      swiper.children[right].className = 'swiper-item swiper-item-next';
+      dotChange()
+    }
+    // 小圆点跟随切换
+    function dotChange() {
+      Array.from(dots.children).forEach(el => {
+        el.className = 'swiper-dot';
+      })
+      dots.children[currentIndex].className = 'swiper-dot swiper-dot-active';
+    }
+
+  </script>
+</body>
+
+</html>
