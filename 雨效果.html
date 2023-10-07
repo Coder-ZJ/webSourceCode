@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="bg"></canvas>
+  <script>
+    const cvs = document.getElementById('bg');
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    cvs.width = width;
+    cvs.height = height;
+    cvs.drawColor = '#000'
+    const ctx = cvs.getContext('2d');
+    const fontSize = 20;
+
+    //列宽
+    const columnWidth = fontSize;
+    //列数
+    const columnCount = Math.floor(width / columnWidth);
+    // 每一列的下一个字符是第几个字符
+    const nextChar = new Array(columnCount).fill(0);
+    function draw() {
+
+      // ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillStyle = 'rgba(240, 240, 240, 0.1)';
+      ctx.fillRect(0, 0, width, height);
+      for (let i = 0; i < columnCount; i++) {
+        // 文字颜色
+        ctx.fillStyle = getRandomColor();
+        // ctx.fillStyle = 'green'
+        const char = getRandomChar();
+        // 字体
+        ctx.font = `${fontSize}px "Roboto Mono"`;
+        // 字符位置
+        const x = columnWidth * i;
+        const y = (nextChar[i] + 1) * fontSize;
+        ctx.fillText(char, x, y);
+        if (y > height && Math.random() > 0.99) {
+          nextChar[i] = 0;
+        } else {
+          nextChar[i]++;
+        }
+      }
+    }
+    // 随机颜色
+    function getRandomColor() {
+      const fontColors = [
+        '#33b5e5',
+        '#0099cc',
+        '#aa66cc',
+        '#9933cc',
+        '#99cc00',
+        '#669900',
+        '#ffbb33',
+        '#ff8800',
+        '#ff4444',
+        '#cc0000'
+      ]
+      return fontColors[Math.floor(Math.random() * fontColors.length)]
+    }
+
+    // 随机字符
+    function getRandomChar() {
+      const str = 'console.log("hello world")';
+      return str[Math.floor(Math.random() * str.length)]
+    }
+    draw()
+    setInterval(draw, 30)
+  </script>
+</body>
+
+</html>
